@@ -1,0 +1,319 @@
+.wihm-settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.wihm-settings-note {
+    opacity: 0.8;
+    display: block;
+    line-height: 1.35;
+}
+
+#wihm_toggle_hierarchy_button.menu_button,
+#wihm_add_folder_button.menu_button {
+    min-width: fit-content;
+    padding: 0 10px;
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.wihm-path-control {
+    min-width: 11em;
+    max-width: 13em;
+}
+
+.wihm-path-control input.wihm-path-input {
+    width: 100%;
+    min-width: 10em;
+}
+
+.wihm-preset-tree-host {
+    margin-top: 6px;
+}
+
+.wihm-preset-folder-tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+}
+
+.wihm-preset-folder-tools .menu_button {
+    min-width: fit-content;
+    padding: 0 8px;
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.wihm-hidden { display: none !important; }
+
+.wihm-preset-tree-host .completion_prompt_manager_prompt {
+    list-style: none;
+    margin: 0;
+}
+
+.wihm-prompt-path-row {
+    display: block;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.wihm-prompt-path-input {
+    width: min(100%, 20rem);
+    min-height: 1.6em;
+    padding: 0 6px;
+    font-size: 0.85em;
+    opacity: 0.9;
+}
+
+.wihm-prompt-path-input:focus {
+    opacity: 1;
+}
+
+.wihm-tree-host {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 4px;
+}
+
+.wihm-tree-group {
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.wihm-tree-group-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: 0;
+    color: inherit;
+    background: var(--black30a);
+    cursor: pointer;
+    padding: 2px 8px;
+    position: relative;
+    min-height: 1.9em;
+}
+
+.wihm-tree-group-header:hover {
+    background: var(--black50a);
+}
+
+.wihm-tree-group-header.wihm-hover-expand-pending {
+    background: var(--black50a);
+}
+
+.wihm-tree-group-header.wihm-drop-target-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--SmartThemeQuoteColor);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    opacity: 0.95;
+}
+
+.wihm-tree-group-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.wihm-tree-group-caret {
+    width: 1.25em;
+    text-align: center;
+    opacity: 0.9;
+    font-size: 1.25em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.wihm-tree-group-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wihm-tree-group-count {
+    opacity: 0.7;
+    font-size: 0.85em;
+    min-width: 2ch;
+    text-align: right;
+}
+
+.wihm-tree-group-right {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.wihm-tree-group-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.wihm-tree-group-actions .menu_button {
+    min-width: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+    min-height: 1.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.wihm-tree-group-children {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 0 4px 14px;
+    background: var(--black10a);
+}
+
+.wihm-folder-dropzone {
+    min-height: 10px;
+    position: relative;
+}
+
+.wihm-root-dropzone {
+    min-height: 0;
+    height: 0;
+}
+
+body.wihm-drag-active .wihm-root-dropzone {
+    min-height: 14px;
+    height: auto;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Indicator drag visuals (hierarchy view) */
+/* -------------------------------------------------------------------------- */
+
+.wihm-drag-ghost {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2147483647;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    background: rgba(0, 0, 0, 0.55);
+    color: inherit;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    user-select: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    will-change: transform, opacity;
+}
+
+.wihm-drop-indicator {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--SmartThemeQuoteColor);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    z-index: 2147483647;
+    pointer-events: none;
+}
+
+.wihm-folder-dropzone.wihm-dropzone-hover::after {
+    content: '';
+    position: absolute;
+    left: var(--wihm-drop-line-left, 0px);
+    right: var(--wihm-drop-line-right, 0px);
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    border-radius: 999px;
+    background: var(--SmartThemeQuoteColor);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    opacity: 0.95;
+}
+
+.wihm-root-dropzone.wihm-dropzone-hover::after {
+    left: 0;
+    right: 0;
+}
+
+body.wihm-hide-global-drop-indicator .st-wio-drop-indicator {
+    opacity: 0 !important;
+}
+
+body.wihm-align-global-drop-indicator .st-wio-drop-indicator {
+    left: var(--wihm-global-drop-left, 0px) !important;
+    width: var(--wihm-global-drop-width, 0px) !important;
+}
+
+.wihm-tree-leaf {
+    display: block;
+}
+
+.wihm-sort-placeholder {
+    height: 34px;
+    border: 1px dashed var(--SmartThemeBorderColor);
+    border-radius: 6px;
+    background: var(--black20a);
+    margin: 2px 0;
+}
+
+.wihm-dragging-slot {
+    opacity: 0.8;
+}
+
+.wihm-entry-slot {
+    display: block;
+}
+
+.wihm-ungrouped-title {
+    font-size: 0.85em;
+    opacity: 0.75;
+    padding: 2px 6px;
+}
+
+.wihm-tree-group[data-node-id="folder:__ungrouped__"] .wihm-tree-group-label {
+    color: #ffd84d;
+    font-weight: 700;
+}
+
+body .wihm-tree-host .world_entry {
+    margin-left: 0;
+}
+
+body .wihm-tree-host .wi-card-entry {
+    margin-bottom: 4px;
+}
