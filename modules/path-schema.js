@@ -85,7 +85,23 @@ export function getEntryPath(entry) {
         return '';
     }
 
-    return normalizePathChain(entry[ENTRY_PATH_KEY] ?? '');
+    // 优先读顶层 path_chain；缺失时回退到 extensions.path_chain。
+    // 后者是 elegant-character-card / 其他工具为穿透 SillyTavern 的 character_book→world_info
+    // 导入流程而采用的承载位置（顶层非 spec 字段会被静默丢弃，extensions 会原样保留）。
+    const topLevel = entry[ENTRY_PATH_KEY];
+    if (typeof topLevel === 'string' && topLevel.trim()) {
+        return normalizePathChain(topLevel);
+    }
+
+    const ext = entry.extensions;
+    if (ext && typeof ext === 'object' && !Array.isArray(ext)) {
+        const fromExt = ext[ENTRY_PATH_KEY];
+        if (typeof fromExt === 'string') {
+            return normalizePathChain(fromExt);
+        }
+    }
+
+    return normalizePathChain(topLevel ?? '');
 }
 
 export function setEntryPath(entry, pathChain) {
@@ -125,7 +141,14 @@ export function ensureWorldHierarchyData(worldData) {
         }
 
         const previousPath = entry[ENTRY_PATH_KEY];
-        const normalizedPath = normalizePathChain(previousPath ?? '');
+        // 顶层缺失时回退 extensions.path_chain（兼容由 character_book 导入而来的世界书）
+        let sourcePath = previousPath;
+        if ((typeof sourcePath !== 'string' || !sourcePath.trim())
+            && entry.extensions && typeof entry.extensions === 'object' && !Array.isArray(entry.extensions)
+            && typeof entry.extensions[ENTRY_PATH_KEY] === 'string') {
+            sourcePath = entry.extensions[ENTRY_PATH_KEY];
+        }
+        const normalizedPath = normalizePathChain(sourcePath ?? '');
 
         if (previousPath !== normalizedPath) {
             entry[ENTRY_PATH_KEY] = normalizedPath;
@@ -137,8 +160,18 @@ export function ensureWorldHierarchyData(worldData) {
         }
     }
 
+    // 顶层 folder_paths 缺失时回退 extensions.folder_paths（同上理由）
+    let sourceFolderPaths = Array.isArray(worldData[FOLDER_PATHS_KEY])
+        ? worldData[FOLDER_PATHS_KEY]
+        : null;
+    if (!sourceFolderPaths
+        && worldData.extensions && typeof worldData.extensions === 'object' && !Array.isArray(worldData.extensions)
+        && Array.isArray(worldData.extensions[FOLDER_PATHS_KEY])) {
+        sourceFolderPaths = worldData.extensions[FOLDER_PATHS_KEY];
+    }
+
     const desiredFolderPaths = normalizeFolderPaths([
-        ...(Array.isArray(worldData[FOLDER_PATHS_KEY]) ? worldData[FOLDER_PATHS_KEY] : []),
+        ...(Array.isArray(sourceFolderPaths) ? sourceFolderPaths : []),
         ...entryPaths,
     ]);
 
